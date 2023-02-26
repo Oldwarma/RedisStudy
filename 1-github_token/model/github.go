@@ -3,9 +3,9 @@ package model
 import "time"
 
 type GithubToken struct {
-	AccessToken string `json:"accessToken"`
+	AccessToken string `json:"access_token"`
 	Scope       string `json:"scope"`
-	TokenType   string `json:"tokenType"`
+	TokenType   string `json:"token_type"`
 }
 
 type GithubUser struct {
