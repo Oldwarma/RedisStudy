@@ -1,0 +1,22 @@
+DataSourceConf:
+  Type: "mysql"
+  Mysql:
+    Address: '120.76.96.94:3306'
+    DbName: 'cert'
+    Username: 'root'
+    Password: 'qwertyuiop'
+    MaxIdleConns: 10
+    MaxOpenConns: 100
+    LogMode: "info"
+RedisConfig:
+  Host: '120.76.96.94'
+  Port: '6379'
+  Database: ''
+  Password: ''
+  ConnectTimeout : 60
+  SubscribeChan: ''
+  RedisPool:
+    PoolMaxIdle: 1000
+    PoolMaxActive: 1000
+    PoolIdleTimeout: 30
+  key: ''
