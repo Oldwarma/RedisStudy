@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/go-redis/redis/v9 v9.0.0-beta.1
+	github.com/gomodule/redigo v1.8.9
 	go.uber.org/zap v1.24.0
 	gorm.io/driver/mysql v1.4.7
 	gorm.io/gorm v1.24.5

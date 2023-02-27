@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"RedisStudy/global"
+	"time"
+)
 
 //秒杀
 
@@ -18,5 +21,10 @@ func (r Voucher) GetById(id int) (Voucher, error) {
 	var v = Voucher{
 		ID: id,
 	}
-
+	result := global.DB.First(&v)
+	if result.Error != nil {
+		return v, result.Error
+	} else {
+		return v, nil
+	}
 }
