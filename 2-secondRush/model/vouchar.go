@@ -28,3 +28,28 @@ func (r Voucher) GetById(id int) (Voucher, error) {
 		return v, nil
 	}
 }
+
+func (r Voucher) Add(amount int, startTime, endTime time.Time) (int, error) {
+	voucher := Voucher{
+		Amount:     amount,
+		StartTime:  startTime,
+		EndTime:    endTime,
+		IsValid:    1,
+		CreateTime: time.Now(),
+	}
+	res := global.DB.Save(&voucher)
+	if res.Error != nil {
+		return 0, res.Error
+	} else {
+		return voucher.ID, nil
+	}
+}
+
+func (r Voucher) DecreaseStock(id int) (int, error) {
+	res, err := r.GetById(id)
+	if err != nil {
+		return 0, err
+	}
+	global.DB.Model(Voucher{}).Where("id=?", id).Update("amount", int32(res.Amount-1))
+	return id, nil
+}

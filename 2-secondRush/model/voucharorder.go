@@ -1,6 +1,9 @@
 package model
 
-import "time"
+import (
+	"RedisStudy/global"
+	"time"
+)
 
 type VoucherOrder struct {
 	ID             int       `json:"id" gorm:"primary_key;type:int"`
@@ -12,4 +15,31 @@ type VoucherOrder struct {
 	CreateDateTime time.Time `gorm:"createDate;default:null"`
 	UpdateDateTime time.Time `gorm:"updateDate;default:null"`
 	IsValid        int       `gorm:"is_valid"`
+}
+
+func (Vo *VoucherOrder) Add(voucherId, accountId, status, payment, orderType int) (int, error) {
+	voucherOrder := VoucherOrder{
+		VoucherID:      voucherId,
+		AccountId:      accountId,
+		Status:         status,
+		Payment:        payment,
+		OrderType:      orderType,
+		IsValid:        1,
+		CreateDateTime: time.Now(),
+	}
+	res := global.DB.Save(&voucherOrder)
+	if res.Error != nil {
+		return 0, res.Error
+	} else {
+		return voucherOrder.ID, nil
+	}
+}
+
+func (Vo VoucherOrder) GetVcOByCondition(accountId, voucherId int) (VoucherOrder, error) {
+	var v VoucherOrder
+	res := global.DB.Model(VoucherOrder{}).Where("account_id=?", accountId).Where("voucher_id=?", voucherId).Find(&v)
+	if res.Error != nil {
+		return v, res.Error
+	}
+	return v, nil
 }
